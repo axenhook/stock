@@ -1,0 +1,113 @@
+#define VK_BACK           0x08
+#define VK_TAB            0x09
+#define VK_CLEAR          0x0C
+#define VK_RETURN         0x0D
+
+#define VK_SHIFT          0x10
+#define VK_CONTROL        0x11
+#define VK_MENU           0x12
+#define VK_PAUSE          0x13
+#define VK_CAPITAL        0x14
+#define VK_ESCAPE         0x1B
+
+#define VK_SPACE          0x20
+#define VK_PRIOR          0x21
+#define VK_NEXT           0x22
+#define VK_END            0x23
+#define VK_HOME           0x24
+#define VK_LEFT           0x25
+#define VK_UP             0x26
+#define VK_RIGHT          0x27
+#define VK_DOWN           0x28
+#define VK_SELECT         0x29
+#define VK_PRINT          0x2A
+#define VK_EXECUTE        0x2B
+#define VK_SNAPSHOT       0x2C
+#define VK_INSERT         0x2D
+#define VK_DELETE         0x2E
+#define VK_HELP           0x2F
+
+#define VK_F1             0x70
+#define VK_F2             0x71
+#define VK_F3             0x72
+#define VK_F4             0x73
+#define VK_F5             0x74
+#define VK_F6             0x75
+#define VK_F7             0x76
+#define VK_F8             0x77
+#define VK_F9             0x78
+#define VK_F10            0x79
+#define VK_F11            0x7A
+#define VK_F12            0x7B
+#define VK_F13            0x7C
+#define VK_F14            0x7D
+#define VK_F15            0x7E
+#define VK_F16            0x7F
+#define VK_F17            0x80
+#define VK_F18            0x81
+#define VK_F19            0x82
+#define VK_F20            0x83
+#define VK_F21            0x84
+#define VK_F22            0x85
+#define VK_F23            0x86
+#define VK_F24            0x87
+
+puts "Sell chips now...";
+puts "name=$name code=$code num=$num price=$price hwnd=$hwnd";
+
+win_activate $hwnd; # 将窗口拉到前台并激活
+
+key_press 116; # F5
+sleep 200;
+key_press 115; # F4
+sleep 200;
+key_press 114; # F3
+sleep 200;
+key_press 113; # F2
+sleep 200;
+key_press 112; # F1
+sleep 200;
+
+key_press 113; # F2
+sleep 200;
+
+key_string $code; # 证券代码
+sleep 600;
+
+key_press 9; # TAB
+sleep 200;
+
+#key_string $price; # 证券价格
+#sleep 200;
+
+key_press 9; # TAB
+sleep 200;
+
+key_string $num; # 证券数量
+sleep 200;
+
+key_press 9; # TAB
+sleep 200;
+
+key_press 13; # ENTER
+sleep 600;
+
+set hwnd [win_find 0 0 "卖出确认"]
+if {$hwnd != 0} {
+	key_press 13; # ENTER
+	sleep 1000;
+}
+
+# 卖出成功
+set hwnd [win_find 0 0 "卖出委托结果"]
+if {$hwnd != 0} {
+	key_press 13; # ENTER
+	sleep 200;
+}
+
+# 股票数量不足
+set hwnd [win_find 0 0 "业务处理结果"]
+if {$hwnd != 0} {
+	key_press 13; # ENTER
+	sleep 200;
+}

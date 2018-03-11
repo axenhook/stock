@@ -1,0 +1,67 @@
+#
+# 预警软件保活脚本, 主要处理以下事件
+#   1. 软件被意外关闭时, 启动软件
+#   2. 遇通讯故障时, 重新登录
+#   3. 定时刷新预警软件界面
+#
+
+# 配置信息
+set watch_path "D:\\Green\\同花顺深度分析\\hexin.exe";
+set watch_name "同花顺";
+
+# 刷新预警软件
+proc flush_watch {hwnd} {
+	puts "Flush watch window (hwnd = $hwnd) now...";
+	
+	send_key_press $hwnd 116; # 发送F5键按下的消息给要刷新的窗口
+}
+
+# 检查预警软件是否启动, 如果未启动, 就启动
+proc check_watch_start {} {
+	puts "Check watch software start now...";
+	
+	global watch_name;
+	global watch_path;
+	
+	set hwnd [win_find 0 0 $watch_name]
+		
+	if {$hwnd == 0} {
+		puts "The watch window $watch_name not found.";
+		exec $watch_path; # 执行程序
+		puts "Execute $watch_path"
+		sleep 2000;
+		key_press 13; # ENTER
+		sleep 2000;
+	} else {
+		puts "The watch window $watch_name (hwnd = $hwnd) is checked ok.";
+	}
+	
+	return $hwnd
+}
+
+# 保活预警软件的主流程
+proc keep_alive_watch {} {
+	puts "Start keep alive watch software now...";
+	
+	set run_times 1;
+	
+	while {1} {
+		if {$run_times == 0} {
+			break;
+		}
+		
+		# 检查软件是否启动
+		set hwnd [check_watch_start];
+		
+		# 刷新软件
+		flush_watch $hwnd;
+		
+		if {$run_times > 0} {
+			set run_times [expr "$run_times - 1"]
+		}
+		
+		#sleep 1000;
+	}
+}
+
+keep_alive_watch;

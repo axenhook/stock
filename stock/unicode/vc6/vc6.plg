@@ -1,0 +1,54 @@
+<html>
+<body>
+<pre>
+<h1>Build Log</h1>
+<h3>
+--------------------Configuration: vc6 - Win32 Debug--------------------
+</h3>
+<h3>Command Lines</h3>
+Creating temporary file "C:\DOCUME~1\axen\LOCALS~1\Temp\RSP30.tmp" with contents
+[
+/nologo /MDd /W3 /Gm /GX /ZI /Od /I "../src" /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /D "_MBCS" /D "_AFXDLL" /D "UNICODE" /FR"Debug/" /Fp"Debug/vc6.pch" /YX /Fo"Debug/" /Fd"Debug/" /FD /GZ /c 
+"D:\WORK\vc\test2008\src\KbdMouseLib.cpp"
+"D:\WORK\vc\test2008\src\TclExtCmd.cpp"
+"D:\WORK\vc\test2008\src\WndLib.cpp"
+]
+Creating command line "cl.exe @C:\DOCUME~1\axen\LOCALS~1\Temp\RSP30.tmp" 
+Creating temporary file "C:\DOCUME~1\axen\LOCALS~1\Temp\RSP31.tmp" with contents
+[
+/nologo /subsystem:console /incremental:yes /pdb:"Debug/vc6.pdb" /debug /machine:I386 /out:"Debug/vc6.exe" /pdbtype:sept 
+.\Debug\KbdMouseLib.obj
+.\Debug\Log.obj
+.\Debug\main.obj
+.\Debug\Stock.obj
+.\Debug\TclExtCmd.obj
+.\Debug\tlog.obj
+.\Debug\WndLib.obj
+]
+Creating command line "link.exe @C:\DOCUME~1\axen\LOCALS~1\Temp\RSP31.tmp"
+<h3>Output Window</h3>
+Compiling...
+KbdMouseLib.cpp
+d:\work\vc\test2008\src\kbdmouselib.cpp(340) : error C2039: 'std' : is not a member of '`global namespace''
+d:\work\vc\test2008\src\kbdmouselib.cpp(340) : error C2065: 'string' : undeclared identifier
+d:\work\vc\test2008\src\kbdmouselib.cpp(340) : error C2146: syntax error : missing ';' before identifier 'str'
+d:\work\vc\test2008\src\kbdmouselib.cpp(340) : error C2065: 'str' : undeclared identifier
+TclExtCmd.cpp
+d:\green\vc6\vc98\mfc\include\afx.h(414) : error C2535: 'const class CString &__thiscall CString::operator =(char)' : member function already defined or declared
+        d:\green\vc6\vc98\mfc\include\afx.h(412) : see declaration of '='
+d:\green\vc6\vc98\mfc\include\afx.h(432) : error C2535: 'const class CString &__thiscall CString::operator +=(char)' : member function already defined or declared
+        d:\green\vc6\vc98\mfc\include\afx.h(429) : see declaration of '+='
+WndLib.cpp
+d:\work\vc\test2008\src\wndlib.cpp(100) : error C2065: 'SwitchToThisWindow' : undeclared identifier
+Ö´ÐÐ cl.exe Ê±³ö´í.
+Creating command line "bscmake.exe /nologo /o"Debug/vc6.bsc"  .\Debug\KbdMouseLib.sbr .\Debug\Log.sbr .\Debug\main.sbr .\Debug\Stock.sbr .\Debug\TclExtCmd.sbr .\Debug\tlog.sbr .\Debug\WndLib.sbr"
+Creating browse info file...
+<h3>Output Window</h3>
+
+
+
+<h3>Results</h3>
+vc6.exe - 1 error(s), 0 warning(s)
+</pre>
+</body>
+</html>

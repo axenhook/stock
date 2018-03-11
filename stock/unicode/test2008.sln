@@ -1,0 +1,26 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual Studio 2008
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ctr", "ctr\ctr.vcproj", "{4FC29AED-1C4F-4A7A-B452-8DDD6756B17F}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "cmd", "cmd\cmd.vcproj", "{9097FD02-FA49-4F9F-9BAC-99C4E09F111E}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{4FC29AED-1C4F-4A7A-B452-8DDD6756B17F}.Debug|Win32.ActiveCfg = Debug|Win32
+		{4FC29AED-1C4F-4A7A-B452-8DDD6756B17F}.Debug|Win32.Build.0 = Debug|Win32
+		{4FC29AED-1C4F-4A7A-B452-8DDD6756B17F}.Release|Win32.ActiveCfg = Release|Win32
+		{4FC29AED-1C4F-4A7A-B452-8DDD6756B17F}.Release|Win32.Build.0 = Release|Win32
+		{9097FD02-FA49-4F9F-9BAC-99C4E09F111E}.Debug|Win32.ActiveCfg = Debug|Win32
+		{9097FD02-FA49-4F9F-9BAC-99C4E09F111E}.Debug|Win32.Build.0 = Debug|Win32
+		{9097FD02-FA49-4F9F-9BAC-99C4E09F111E}.Release|Win32.ActiveCfg = Release|Win32
+		{9097FD02-FA49-4F9F-9BAC-99C4E09F111E}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

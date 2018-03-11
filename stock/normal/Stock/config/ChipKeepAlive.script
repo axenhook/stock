@@ -1,0 +1,158 @@
+#
+# 下单软件保活脚本, 主要处理以下事件
+#   1. 软件被意外关闭时, 启动软件
+#   2. 遇通讯故障时, 重新登录
+#   3. 定时刷新下单软件界面
+#
+
+# 配置信息
+set chip_path "D:\\Green\\AX\\2003\\client.exe";
+set chip_name "安信交易";
+set chip_offline_name1 "警告";
+set chip_offline_name2 "提示";
+set chip_login_button  "登录";
+set chip_login_class   "Button";
+
+# 刷新下单软件
+proc flush_chip {hwnd} {
+	puts "Flush chip window (hwnd = $hwnd) now...";
+	
+	set x [rand];
+	
+	if {[expr "$x % 2"] == 0} {
+		send_key_press $hwnd 116; # 发送F5键按下的消息给要刷新的窗口
+		puts "Send F5 to $hwnd";
+	} else {
+		send_key_press $hwnd 115; # 发送F4键按下的消息给要刷新的窗口
+		puts "Send F4 to $hwnd";
+	}
+}
+
+# 登录下单软件
+proc login_chip {hwnd} {
+	puts "Login chip button (hwnd = $hwnd) now...";
+	
+	win_activate $hwnd; # 将窗口拉到前台并激活
+	
+	# 移动到密码输入框上
+	mouse_mvr $hwnd 145 156
+	mouse_lclk
+	sleep 1000
+	key_string 020730
+	
+	# 移动到验证码输入框上
+	mouse_mvr $hwnd 156 190
+	mouse_lclk
+	sleep 1000
+	key_string 1234
+	
+	# 移动到登录按钮上
+	mouse_mvr $hwnd 122 220
+	sleep 1000
+	mouse_lclk
+	
+	sleep 2000
+}
+
+# 检查是否是登录界面, 如果是, 就登录下单软件
+proc check_chip_login {hwnd} {
+	global chip_login_class
+	global chip_login_button
+	
+	puts "Check chip login condition ($chip_login_class, $chip_login_button) now...";
+	
+	set hwnd_login [win_find $hwnd $chip_login_class $chip_login_button]
+	if {$hwnd_login != 0} {
+		puts "The login button (hwnd = $hwnd_login) found."
+		login_chip $hwnd;
+		return -1;
+	}
+	
+	return 0;
+}
+
+# 检查下单软件是否启动, 如果未启动, 就启动
+proc check_chip_start {} {
+	puts "Check chip software start now...";
+	
+	global chip_name;
+	global chip_path;
+	
+	while {1} {
+		set hwnd [win_find 0 0 $chip_name]
+		
+		if {$hwnd == 0} {
+			puts "The chip window $chip_name not found.";
+			exec $chip_path; # 执行程序
+			sleep 2000;
+		} else {
+			puts "The chip window $chip_name (hwnd = $hwnd) is checked ok.";
+			break;
+		}
+	}
+	
+	return $hwnd
+}
+
+# 检查下单软件是否断线了
+proc check_chip_offline {hwnd offline_name} {
+	puts "Check chip window (hwnd = $hwnd) $offline_name now...";
+	
+	set hwnd_off [win_find 0 0 $offline_name]
+	if {$hwnd_off != 0} {
+		if {$hwnd == [ win_owner $hwnd_off ]} { # 说明真的断线了
+			win_close $hwnd_off;
+			return -1;
+		}
+	}
+	
+	return 0;
+}
+
+# 保活下单软件的主流程
+proc keep_alive_chip {} {
+	puts "Start keep alive chip software now...";
+	
+	global chip_offline_name1;
+	global chip_offline_name2;
+	
+	set run_times 1;
+	
+	while {1} {
+		if {$run_times == 0} {
+			break;
+		}
+		
+		# 检查软件是否启动
+		set hwnd [check_chip_start];
+		
+		# 检查是否故障1
+		set ret [check_chip_offline $hwnd $chip_offline_name1];
+		if {$ret != 0} {
+			continue;
+		}
+		
+		# 检查是否故障2
+		set ret [check_chip_offline $hwnd $chip_offline_name2];
+		if {$ret != 0} {
+			continue;
+		}
+		
+		# 检查是否需要登录
+		set ret [check_chip_login $hwnd];
+		if {$ret != 0} {
+			continue;
+		}
+		
+		# 刷新软件
+		flush_chip $hwnd;
+		
+		if {$run_times > 0} {
+			set run_times [expr "$run_times - 1"]
+		}
+		
+		#sleep 1000;
+	}
+}
+
+keep_alive_chip;
